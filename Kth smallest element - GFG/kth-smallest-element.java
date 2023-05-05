@@ -39,9 +39,11 @@ class Solution{
             int pivotIndex = partition(arr, l, r);
             if (pivotIndex - l == k - 1) {
                 return arr[pivotIndex];
-            } else if (pivotIndex - l > k - 1) {
+            } 
+            else if (pivotIndex - l > k - 1) {
                 return kthSmallest(arr, l, pivotIndex - 1, k);
-            } else {
+            } 
+            else {
                 return kthSmallest(arr, pivotIndex + 1, r, k - pivotIndex + l - 1);
             }
         }
