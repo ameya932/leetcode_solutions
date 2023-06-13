@@ -10,30 +10,27 @@
  */
 class Solution {
     public ListNode insertionSortList(ListNode head) {
-        if(head==null || head.next==null){
+        if(head.next == null){
             return head;
         }
-        ListNode pre = new ListNode(-11);
-        ListNode sorted = new ListNode(head.val);
-        pre.next = sorted;
-        head = head.next;
-        while(head != null) {
-            if(head.val < sorted.val) {
-                ListNode tempPre = pre;
-                while(pre.next!=null && pre.next.val<head.val) {
-                    pre = pre.next;
-                }
-                ListNode temp = pre.next;
-                pre.next = new ListNode(head.val);
-                pre.next.next = temp;
-                pre = tempPre;
-            } 
-            else {
-                sorted.next = new ListNode(head.val);
-                sorted = sorted.next;
+        ListNode curr = head;
+        ListNode prev, num;
+        ListNode dummy = new ListNode(-1, head);
+        while(curr!=null && curr.next!=null){
+            if(curr.val <= curr.next.val){
+                curr = curr.next;
             }
-            head = head.next;
+            else{
+                num = curr.next;
+                prev = dummy;
+                while(prev.next.val < num.val){
+                    prev = prev.next;
+                }
+                curr.next = num.next;
+                num.next = prev.next;
+                prev.next = num;
+            }
         }
-        return pre.next;
+        return dummy.next;
     }
 }
