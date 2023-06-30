@@ -10,7 +10,6 @@ class Solution {
         maxSum = Math.max(maxSum, sum);        
         for(int i=n-1; i>0; i--){
             sum = sum+total-(nums[i]*(n));
-            //System.out.println(sum+" "+nums[i]*(n+1));
             maxSum = Math.max(maxSum, sum);
         }
         return (int)maxSum;
