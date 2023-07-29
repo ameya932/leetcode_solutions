@@ -27,8 +27,8 @@ class GFG {
 // } Driver Code Ends
 
 class Pair{
-    int first = 0;
-    int second = 0;
+    int first;
+    int second;
     public Pair(int first, int second){
         this.first = first;
         this.second = second;
@@ -38,17 +38,17 @@ class Pair{
 class Solution {
     // Function to find the number of islands.
     private void bfs(int r, int c, int[][] vis, char[][] grid){
+        vis[r][c] = 1;
+        Queue<Pair> q = new LinkedList<Pair>();
+        q.add(new Pair(r, c));
         int n = grid.length;
         int m = grid[0].length;
-        vis[r][c] = 1;
-        Queue<Pair> q = new LinkedList<>();
-        q.add(new Pair(r, c));
         while(!q.isEmpty()){
             int row = q.peek().first;
             int col = q.peek().second;
             q.remove();
             for(int delrow=-1; delrow<=1; delrow++){
-                for(int delcol = -1; delcol<=1; delcol++){
+                for(int delcol=-1; delcol<=1; delcol++){
                     int nrow = row+delrow;
                     int ncol = col+delcol;
                     if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]=='1' && vis[nrow][ncol]==0){
@@ -63,7 +63,7 @@ class Solution {
         // Code here
         int n = grid.length;
         int m = grid[0].length;
-        int[][] vis = new int[n][m];
+        int[][] vis= new int[n][m];
         int count = 0;
         for(int row=0; row<n; row++){
             for(int col=0; col<m; col++){
