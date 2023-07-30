@@ -31,45 +31,68 @@ class GFG {
 }
 // } Driver Code Ends
 
-class Pair{
-    int first, second;
-    Pair(int first, int second){
-        this.first = first;
-        this.second = second;
-    }
-}
+// class Pair{
+//     int first, second;
+//     Pair(int first, int second){
+//         this.first = first;
+//         this.second = second;
+//     }
+// }
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean checkCycle(int src, int V, ArrayList<ArrayList<Integer>> adj, boolean vis[]){
-        vis[src] = true;
-        Queue<Pair> q = new LinkedList<>();
-        q.add(new Pair(src, -1));
-        while(!q.isEmpty()){
-            int node = q.peek().first;
-            int parent = q.peek().second;
-            q.remove();
-            for(int adjNode : adj.get(node)){
-                if(vis[adjNode] == false){
-                    vis[adjNode] = true;
-                    q.add(new Pair(adjNode, node));
-                }
-                else if(parent != adjNode){
+    // public boolean checkCycle(int src, int V, ArrayList<ArrayList<Integer>> adj, boolean vis[]){
+    //     vis[src] = true;
+    //     Queue<Pair> q = new LinkedList<>();
+    //     q.add(new Pair(src, -1));
+    //     while(!q.isEmpty()){
+    //         int node = q.peek().first;
+    //         int parent = q.peek().second;
+    //         q.remove();
+    //         for(int adjNode : adj.get(node)){
+    //             if(vis[adjNode] == false){
+    //                 vis[adjNode] = true;
+    //                 q.add(new Pair(adjNode, node));
+    //             }
+    //             else if(parent != adjNode){
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+    private boolean dfs(int node, int parent, int[] vis, ArrayList<ArrayList<Integer>> adj){
+        vis[node] = 1;
+        for(int adjnode : adj.get(node)){
+            if(vis[adjnode] == 0){
+                if(dfs(adjnode, node, vis, adj) == true){
                     return true;
                 }
+            }
+            else if(adjnode != parent){
+                return true;
             }
         }
         return false;
     }
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean vis[] = new boolean[V];
+        // boolean vis[] = new boolean[V];
+        // for(int i=0; i<V; i++){
+        //     vis[i] = false;
+        // }
+        // for(int i=0; i<V; i++){
+        //     if(vis[i] == false){
+        //         if(checkCycle(i, V, adj, vis)){
+        //             return true;
+        //         }
+        //     }
+        // }
+        // return false;
+        int[] vis = new int[V];
         for(int i=0; i<V; i++){
-            vis[i] = false;
-        }
-        for(int i=0; i<V; i++){
-            if(vis[i] == false){
-                if(checkCycle(i, V, adj, vis)){
+            if(vis[i] == 0){
+                if(dfs(i, -1, vis, adj) == true){
                     return true;
                 }
             }
