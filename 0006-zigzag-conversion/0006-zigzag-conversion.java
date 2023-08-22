@@ -3,27 +3,24 @@ class Solution {
         if(numRows == 1){
             return s;
         }
-        StringBuilder[] sb = new StringBuilder[numRows];
-        int row = 0;
-        int dir = 0;
-        for(int i=0; i<sb.length; i++){
-            sb[i] = new StringBuilder();
-        }
-        for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
-            row += dir;
-            sb[row].append(c);
-            if(row==0 || row==numRows-1){
-                dir = (dir==0) ? 1 : -dir;
+        int n = s.length();
+        StringBuilder sb = new StringBuilder();
+        int diff = 2*(numRows-1);
+        int diagDiff = diff;
+        for(int i=0; i<numRows; i++){
+            int ind = i;
+            while(ind < n){
+                sb.append(s.charAt(ind));
+                if(i!=0 && i!=numRows-1){
+                    diagDiff = diff-2*i;
+                    int sec = ind+diagDiff;
+                    if(sec < n){
+                        sb.append(s.charAt(sec));
+                    }
+                }
+                ind += diff;
             }
         }
-        return convert(sb);
-    }
-    private String convert(StringBuilder[] sb){
-        StringBuilder result = new StringBuilder();
-        for(StringBuilder str : sb){
-            result.append(str.toString());
-        }
-        return result.toString();
+        return sb.toString();
     }
 }
